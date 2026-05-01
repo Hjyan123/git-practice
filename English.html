@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>生词本</title>
+    <style>
+        .input-area {
+            margin: 20px 0;
+        }
+        input {
+            padding: 5px;
+            margin: 0 5px;
+        }
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .word-item {
+            margin: 10px 0;
+        }
+        .chinese-meaning {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="input-area">
+        英文：<input type="text" id="englishInput">；
+        中文：<input type="text" id="chineseInput">
+        <button id="addBtn">add</button>
+        <button id="clearBtn">clear</button>
+    </div>
+    <div id="wordList"></div>
+
+    <script>
+        // 获取DOM元素
+        const englishInput = document.getElementById('englishInput');
+        const chineseInput = document.getElementById('chineseInput');
+        const addBtn = document.getElementById('addBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const wordList = document.getElementById('wordList');
+
+        // 添加单词事件
+        addBtn.addEventListener('click', function() {
+            const english = englishInput.value.trim();
+            const chinese = chineseInput.value.trim();
+            if (english) {
+                const wordItem = document.createElement('div');
+                wordItem.className = 'word-item';
+                const englishSpan = document.createElement('span');
+                englishSpan.textContent = `英文：${english}；`;
+                const chineseLabel = document.createElement('span');
+                chineseLabel.textContent = "中文：";
+                const chineseMeaning = document.createElement('span');
+                chineseMeaning.className = 'chinese-meaning';
+                chineseMeaning.textContent = chinese;
+                
+                //鼠标交互事件
+                englishSpan.addEventListener('mousedown', function() {
+                    chineseMeaning.style.display = 'inline';
+                });
+                englishSpan.addEventListener('mouseup', function() {
+                    chineseMeaning.style.display = 'none';
+                });
+
+                wordItem.appendChild(englishSpan);
+                wordItem.appendChild(chineseLabel);
+                wordItem.appendChild(chineseMeaning);
+                wordList.appendChild(wordItem);
+            }
+        });
+
+        // 清空所有词条事件
+        clearBtn.addEventListener('click', function() {
+            wordList.innerHTML = '';
+        });
+    </script>
+</body>
+</html>
